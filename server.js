@@ -9,7 +9,12 @@ const echoDefinition = grpc.loadPackageDefinition(echoProto);
 const { echo } = echoDefinition;
 // create grpc server
 const server = new grpc.Server();
-function echoUnary(call, callback) {}
+function echoUnary(call, callback) {
+  console.log(`call : ${JSON.stringify(call.request)}`);
+  callback(null,{
+    message : "recived"
+  })
+}
 function echoClientStream(call, callback) {}
 function echoServerStream(call, callback) {}
 function echoBidiStream(call, callback) {}
