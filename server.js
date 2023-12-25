@@ -11,13 +11,23 @@ const { echo } = echoDefinition;
 const server = new grpc.Server();
 function echoUnary(call, callback) {
   console.log(`call : ${JSON.stringify(call.request)}`);
-  callback(null,{
-    message : "recived"
-  })
+  callback(null, {
+    message: "recived",
+  });
 }
+
 function echoClientStream(call, callback) {}
-function echoServerStream(call, callback) {}
+
+function echoServerStream(call, callback) {
+  // streams 1 to 10
+  for (let index = 1; index < 11; index++) {
+    call.write({ value: index });
+  }
+  call.on("end", (error) => console.log("server side error", error));
+}
+
 function echoBidiStream(call, callback) {}
+
 server.addService(echo.echoService.service, {
   /* methode : (call, callback) => {
         some actions

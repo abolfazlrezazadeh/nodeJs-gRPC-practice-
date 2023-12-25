@@ -4,11 +4,13 @@ package echo;
 message echoMessage {
     string value = 1;
 }
+message empty {}
 
 service echoService {
     // rpc MethodName (Request) returns (Response);
     rpc echoUnary (echoMessage) returns (echoMessage);
     rpc echoClientStream (stream echoMessage) returns (echoMessage);
-    rpc echoServerStream (echoMessage) returns (stream echoMessage);
+    // in echoServerStream it can send empty request but it get stream response
+    rpc echoServerStream (empty) returns (stream echoMessage);
     rpc echoBidiStream (stream echoMessage) returns (stream echoMessage);
 }
