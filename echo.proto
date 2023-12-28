@@ -6,10 +6,14 @@ message echoMessage {
 }
 message empty {}
 
+message echosList{
+    repeated echoMessage echo = 1;
+}
+
 service echoService {
     // rpc MethodName (Request) returns (Response);
     rpc echoUnary (echoMessage) returns (echoMessage);
-    rpc echoClientStream (stream echoMessage) returns (echoMessage);
+    rpc echoClientStream (stream echoMessage) returns (echosList);
     // in echoServerStream it can send empty request but it get stream response
     rpc echoServerStream (empty) returns (stream echoMessage);
     rpc echoBidiStream (stream echoMessage) returns (stream echoMessage);

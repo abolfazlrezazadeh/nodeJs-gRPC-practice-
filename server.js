@@ -16,7 +16,16 @@ function echoUnary(call, callback) {
   });
 }
 
-function echoClientStream(call, callback) {}
+function echoClientStream(call, callback) {
+  const list = [];
+  call.on("data", (data) => {
+    list.push(data);
+    console.log("server side data", data);
+  });
+  call.on("end", (error) => {
+    console.log(list);
+    console.log("server side error", error)});
+}
 
 function echoServerStream(call, callback) {
   // streams 1 to 10
