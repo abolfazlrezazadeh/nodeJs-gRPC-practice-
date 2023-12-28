@@ -24,7 +24,8 @@ function echoClientStream(call, callback) {
   });
   call.on("end", (error) => {
     console.log(list);
-    console.log("server side error", error)});
+    console.log("server side error", error);
+  });
 }
 
 function echoServerStream(call, callback) {
@@ -35,7 +36,15 @@ function echoServerStream(call, callback) {
   call.on("end", (error) => console.log("server side error", error));
 }
 
-function echoBidiStream(call, callback) {}
+function echoBidiStream(call, callback) {
+  call.on("data", (data) => {
+    console.log("data That Comes From Client :", data);
+    call.write({ value: new Date().toLocaleString() });
+  });
+  call.on("end", (error) => {
+    console.log(error);
+  });
+}
 
 server.addService(echo.echoService.service, {
   /* methode : (call, callback) => {
